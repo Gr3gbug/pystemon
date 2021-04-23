@@ -272,6 +272,9 @@ def main_as_daemon(config):
     main(config)
 
 if __name__ == "__main__":
+    with open("process_ID.txt", "w") as file:
+        file.write(str(os.getpid()))
+    file.close()
     global logger
     parser = optparse.OptionParser("usage: %prog [options]")
     parser.add_option("-c", "--config", dest="config",
@@ -353,4 +356,3 @@ if __name__ == "__main__":
         main_as_daemon(config)
     else:
         main(config)
-
