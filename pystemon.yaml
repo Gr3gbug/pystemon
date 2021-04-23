@@ -1,5 +1,5 @@
-network:               # Network settings
-  ip: '172.17.85.12'        # Specify source IP address if you want to bind on a specific one
+#network:               # Network settings
+#  ip: '172.17.85.12'        # Specify source IP address if you want to bind on a specific one
 
 pid:
   filename: '/var/run/pystemon.pid'
@@ -7,7 +7,7 @@ pid:
 engine: re              # Only re (default) or regex (pip install regex) are supported.
 strict_regex: no        # when compiling regex, hard fail or not on error
 
-save-thread: no         # Use a separate thread to save pasties
+save-thread: yes         # Use a separate thread to save pasties
 
 logging-level: INFO     # Define logging level (NOTSET, DEBUG, INFO, WARNING, ERROR, CRITICAL)
 
@@ -48,8 +48,8 @@ storage:
 
   redis:
     storage-classname:    RedisStorage
-    save: no             # Keep a copy of pasties that triggered alerts
-    save-all: no         # Keep a copy of all pasties
+    save: yes             # Keep a copy of pasties that triggered alerts
+    save-all: yes         # Keep a copy of all pasties
     server: "localhost"
     port: 6379
     database: 10
@@ -122,13 +122,13 @@ site:
 #                       # This is practical for sites that require custom fetchPastie() functions
 
   pastebin.com:
-    enable: no
+    enable: yes
     archive-url: 'https://pastebin.com/archive'
     archive-regex: '<a href="/(\w{8})">.+</a></td>'
     download-url: 'https://pastebin.com/raw/{id}'
-    update-max: 50
-    update-min: 40
-    throttling: 5000
+    update-max: 80
+    update-min: 60
+    throttling: 7000
 
   # Note: The official scraping has been discontinued: https://twitter.com/pastebin/status/1250455777069817856?s=20
   # See https://pastebin.com/api_scraping_faq , you will need a pro account on pastebin
@@ -147,21 +147,21 @@ site:
     # note: they don't like scraping. Tuning of update-max and update-min is needed!
     # You will likely also want to enable random user-agent and proxies(see below).
     # See https://slexy.org/tos for more information
-    enable: no
+    enable: yes
     archive-url: 'https://slexy.org/recent'
     archive-regex: '<a href="/view/([a-zA-Z0-9]+)">View paste</a>'
     download-url: 'https://slexy.org/view/{id}'
     pastie-classname: PastieSlexyOrg
-    update-max: 50
-    update-min: 40
-    throttling: 5000
+    update-max: 80
+    update-min: 70
+    throttling: 8000
 
   gist.github.com:
-    enable: no
+    enable: yes
     archive-url: 'https://gist.github.com/discover'
     archive-regex: '<a href="/([A-Za-z0-9]+/[A-Za-z0-9]+)">'
     download-url: 'https://gist.githubusercontent.com/{id}/raw/'
-    throttling: 5000
+    throttling: 6500
 
 
   codepad.org:
@@ -169,43 +169,43 @@ site:
     archive-url: 'http://codepad.org/recent'
     archive-regex: '<a href="http://codepad.org/([a-zA-Z0-9]+)">view'
     download-url: 'http://codepad.org/{id}/raw.txt'
-    throttling: 5000
+    throttling: 6500
 
   paste.org.ru:
-    enable: no
+    enable: yes
     archive-url: 'http://paste.org.ru'
     archive-regex: '<a href=''/\?(\w+)''>'
     download-url: 'http://paste.org.ru/?{id}'
     pastie-classname: PastiePasteOrgRu
-    throttling: 5000
+    throttling: 6500
  
   kpaste.net:
-    enable: no
+    enable: yes
     archive-url: 'http://kpaste.net/'
     archive-regex: '" href="/(\w+)">'
     download-url: 'http://kpaste.net/{id}?raw'
-    throttling: 5000
+    throttling: 7000
 
   ideone.com:
-    enable: no
+    enable: yes
     archive-url: 'https://ideone.com/recent'
     archive-regex: '<a href="/([a-zA-Z0-9]+)">#'
     download-url: 'https://ideone.com/plain/{id}'
-    throttling: 5000
+    throttling: 6500
 
   pastebin.fr:
-    enable: no
+    enable: yes
     archive-url: 'http://pastebin.fr'
     archive-regex: '<a href="http://pastebin.fr/(\d+)'
     download-url: 'http://pastebin.fr/pastebin.php?dl={id}'
-    throttling: 5000
+    throttling: 6000
 
   pastebin.gr:
-    enable: no
+    enable: yes
     archive-url: 'http://pastebin.gr/archive'
     archive-regex: '<td><a href="(\d+)" title='
     download-url: 'http://pastebin.gr/paste.php?download&id={id}'
-    throttling: 5000
+    throttling: 6500
 
   # Exercise related sites
   # this is site related to the LockedShields Cyber exercise.
@@ -263,7 +263,7 @@ site:
   #   archive-regex: '<td><a href="([A-Za-z0-9]+)">'
   #   download-url: 'http://www.quickleak.se/{id}'
 
-#  safebin.net:  # FIXME not finished
+#  safebin.net: 
 #    archive-url: 'http://safebin.net/?archive'
 #    archive-regex: '<a title="[a-zA-Z0-9 :,]+" href="/([0-9]+)">'
 #    download-url: 'http://safebin.net/{id}'
@@ -271,7 +271,7 @@ site:
 #    update-min: 50
 
 
-# TODO
+# 
 # http://www.safebin.net/       # more complex site
 # http://www.heypasteit.com/    # http://www.heypasteit.com/clip/0IZA => incremental
 
